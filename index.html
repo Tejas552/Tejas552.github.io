@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tejas Kale · Data Scientist, Biologics Manufacturing</title>
+<meta name="description" content="Data Scientist at Wockhardt Ltd. Document intelligence, image analysis and offline root-cause tooling built inside a GxP-regulated insulin and biologics plant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1720;
+    --surface:#16212c;
+    --surface-2:#1c2a37;
+    --paper:#e8ecef;
+    --paper-dim:#93a3ac;
+    --brass:#5b9bd9;
+    --brass-dim:#3f7bb0;
+    --teal:#74b49b;
+    --line:rgba(232,236,239,0.13);
+    --line-strong:rgba(232,236,239,0.27);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, Segoe UI, sans-serif;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+    --maxw: 980px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(212,162,78,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(95,144,137,0.10), transparent 60%),
+      var(--ink);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass);color:var(--ink);}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  img{max-width:100%;display:block;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(18,24,28,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .headbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px; max-width:var(--maxw); margin:0 auto;
+  }
+  .brand{
+    font-family:var(--serif); font-size:1.05rem; font-weight:600;
+    letter-spacing:0.01em; text-decoration:none; color:var(--paper);
+    display:flex; align-items:center; gap:9px;
+  }
+  .brand .mark{
+    width:9px;height:9px;border-radius:1px;background:var(--brass);
+    box-shadow:0 0 0 3px rgba(212,162,78,0.18);
+  }
+  nav.primary{display:flex; gap:26px;}
+  nav.primary a{
+    font-size:0.88rem; text-decoration:none; color:var(--paper-dim);
+    padding:4px 0; border-bottom:1px solid transparent;
+    transition:color .15s, border-color .15s;
+  }
+  nav.primary a:hover{color:var(--paper); border-color:var(--brass-dim);}
+  .menu-btn{display:none; background:none; border:1px solid var(--line-strong); color:var(--paper); padding:7px 10px; border-radius:2px; font-size:0.85rem;}
+  @media (max-width:760px){
+    nav.primary{display:none;}
+    .menu-btn{display:block;}
+    nav.primary.open{
+      display:flex; flex-direction:column; gap:0; position:absolute; top:60px; left:0; right:0;
+      background:var(--surface); border-bottom:1px solid var(--line); padding:8px 28px 16px;
+    }
+    nav.primary.open a{padding:10px 0; border-bottom:1px solid var(--line);}
+  }
+
+  section{padding:88px 0;}
+  @media (max-width:640px){ section{padding:56px 0;} }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:0.78rem; color:var(--teal);
+    margin:0 0 14px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--teal);display:inline-block;}
+
+  h1,h2,h3,h4{font-family:var(--serif); font-weight:600; margin:0; color:var(--paper);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:96px 0 70px;}
+  .hero-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(2.1rem, 4.4vw, 3.1rem); line-height:1.14; letter-spacing:-0.01em;}
+  .hero .role{font-family:var(--mono); font-size:0.92rem; color:var(--brass); margin:18px 0 22px;}
+  .hero p.lede{font-size:1.08rem; color:var(--paper-dim); max-width:56ch;}
+  .cta-row{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:11px 20px; font-size:0.92rem; text-decoration:none;
+    border-radius:2px; font-weight:500; transition:transform .12s, background .15s;
+  }
+  .btn.primary{background:var(--brass); color:var(--ink);}
+  .btn.primary:hover{background:#e2b264;}
+  .btn.ghost{border:1px solid var(--line-strong); color:var(--paper);}
+  .btn.ghost:hover{border-color:var(--brass-dim); color:var(--brass);}
+
+  /* record card — the recurring motif, styled like a batch-record field box */
+  .record-card{
+    border:1px solid var(--line-strong);
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    padding:22px 22px 18px;
+    position:relative;
+  }
+  .record-card::before, .record-card::after{
+    content:''; position:absolute; width:9px; height:9px;
+    border-top:1px solid var(--brass-dim); border-left:1px solid var(--brass-dim);
+    top:-1px; left:-1px;
+  }
+  .record-card::after{
+    top:auto; left:auto; bottom:-1px; right:-1px;
+    border-top:none; border-left:none;
+    border-bottom:1px solid var(--brass-dim); border-right:1px solid var(--brass-dim);
+  }
+  .record-card .field{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:11px 0; border-bottom:1px dashed var(--line);
+    gap:12px;
+  }
+  .record-card .field:last-child{border-bottom:none;}
+  .field .label{font-size:0.82rem; color:var(--paper-dim);}
+  .field .value{font-family:var(--mono); font-size:1.02rem; color:var(--brass); text-align:right; white-space:nowrap;}
+
+  /* ---------- Numbers strip ---------- */
+  .numbers{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(255,255,255,0.015);}
+  .numbers-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);}
+  @media (max-width:760px){ .numbers-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:460px){ .numbers-grid{grid-template-columns:1fr;} }
+  .num-cell{background:var(--ink); padding:30px 26px; transition:background .18s;}
+  .num-cell:hover{background:var(--surface);}
+  .num-cell .n{
+    font-family:var(--mono); font-size:clamp(1.5rem,2.6vw,2rem); color:var(--brass);
+    display:block; line-height:1.1;
+  }
+  .num-cell .d{color:var(--paper-dim); font-size:0.86rem; margin-top:8px; max-width:24ch;}
+  .num-cell svg{margin-top:14px; display:block;}
+
+  /* ---------- Journey ---------- */
+  .timeline{border-left:1px solid var(--line-strong); margin-left:6px; padding-left:32px;}
+  .tl-item{position:relative; padding-bottom:38px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:''; position:absolute; left:-37px; top:5px;
+    width:11px; height:11px; background:var(--ink); border:2px solid var(--brass);
+  }
+  .tl-item .when{font-family:var(--mono); font-size:0.8rem; color:var(--teal); margin-bottom:6px;}
+  .tl-item h4{font-size:1.15rem;}
+  .tl-item .where{color:var(--paper-dim); font-size:0.92rem; margin-top:4px;}
+
+  /* ---------- Work / case studies ---------- */
+  .case{
+    border-top:1px solid var(--line); padding:52px 0;
+  }
+  .case:first-of-type{border-top:none;}
+  .case-head{display:flex; justify-content:space-between; align-items:baseline; gap:20px; flex-wrap:wrap;}
+  .case-tag{font-family:var(--mono); font-size:0.78rem; color:var(--teal);}
+  .case h3{font-size:1.55rem; margin-top:10px; max-width:34ch;}
+  .case .status{
+    font-family:var(--mono); font-size:0.76rem; padding:3px 9px; border:1px solid var(--line-strong);
+    color:var(--paper-dim); white-space:nowrap; height:fit-content;
+  }
+  .case .status.live{color:var(--teal); border-color:var(--teal);}
+  .case .status.progress{color:var(--brass); border-color:var(--brass-dim);}
+  .case-body{margin-top:22px; display:grid; grid-template-columns:1fr 220px; gap:36px;}
+  @media (max-width:760px){ .case-body{grid-template-columns:1fr;} }
+  .case-body h5{
+    font-family:var(--sans); font-weight:600; font-size:0.86rem; color:var(--paper);
+    margin:22px 0 8px;
+  }
+  .case-body h5:first-child{margin-top:0;}
+  .case-body p{color:var(--paper-dim); margin:0 0 4px;}
+  .case-stats{display:flex; flex-direction:column; gap:14px;}
+  .stat-chip{border:1px solid var(--line); padding:12px 14px;}
+  .stat-chip .n{font-family:var(--mono); color:var(--brass); font-size:1.3rem; display:block;}
+  .stat-chip .d{font-size:0.78rem; color:var(--paper-dim); margin-top:2px;}
+  .tools-line{margin-top:16px; font-family:var(--mono); font-size:0.78rem; color:var(--teal); line-height:2;}
+  .tools-line span{border:1px solid var(--line); padding:2px 8px; margin:0 6px 6px 0; display:inline-block;}
+
+  .also-built{
+    margin-top:56px; border:1px solid var(--line); padding:26px 28px;
+    background:rgba(255,255,255,0.015);
+  }
+  .also-built h4{font-size:1rem; margin-bottom:14px;}
+  .also-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px 30px;}
+  @media (max-width:640px){ .also-list{grid-template-columns:1fr;} }
+  .also-list li{font-size:0.92rem; color:var(--paper-dim); padding-left:16px; position:relative;}
+  .also-list li::before{content:'—'; position:absolute; left:0; color:var(--brass-dim);}
+  .also-list li b{color:var(--paper); font-weight:500;}
+
+  /* ---------- Approach ---------- */
+  .principles{display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border:1px solid var(--line);}
+  @media (max-width:700px){ .principles{grid-template-columns:1fr;} }
+  .principle{background:var(--ink); padding:30px 28px;}
+  .principle .tag{font-family:var(--mono); font-size:0.74rem; color:var(--brass); margin-bottom:12px; display:block;}
+  .principle h4{font-size:1.12rem; margin-bottom:10px; max-width:26ch;}
+  .principle p{color:var(--paper-dim); font-size:0.94rem; margin:0;}
+
+  /* ---------- Skills ---------- */
+  .skill-groups{display:grid; grid-template-columns:1fr 1fr; gap:34px 48px;}
+  @media (max-width:700px){ .skill-groups{grid-template-columns:1fr;} }
+  .skill-group h4{font-size:0.92rem; color:var(--teal); font-weight:500; margin-bottom:12px; font-family:var(--mono);}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    border:1px solid var(--line-strong); padding:6px 12px; font-size:0.86rem;
+    color:var(--paper-dim);
+  }
+
+  /* ---------- Research ---------- */
+  .paper-card{border:1px solid var(--line); padding:24px 26px; display:grid; grid-template-columns:70px 1fr; gap:20px; align-items:start;}
+  .paper-card .yr{font-family:var(--mono); color:var(--brass); font-size:1.2rem;}
+  .paper-card h4{font-size:1.05rem; margin-bottom:6px; max-width:56ch;}
+  .paper-card .venue{color:var(--paper-dim); font-size:0.86rem; margin-bottom:8px;}
+  .paper-card .note{color:var(--paper-dim); font-size:0.9rem;}
+
+  /* ---------- Credentials ---------- */
+  .cred-list{display:flex; flex-direction:column; gap:0;}
+  .cred-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    padding:16px 0; border-bottom:1px solid var(--line); flex-wrap:wrap;
+  }
+  .cred-item:last-child{border-bottom:none;}
+  .cred-item .what{font-weight:500; color:var(--paper);}
+  .cred-item .where{color:var(--paper-dim); font-size:0.9rem;}
+  .cred-item .when{font-family:var(--mono); color:var(--teal); font-size:0.86rem;}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:start;}
+  @media (max-width:760px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-links{display:flex; flex-direction:column; gap:0;}
+  .contact-links a{
+    display:flex; justify-content:space-between; padding:15px 0; text-decoration:none;
+    border-bottom:1px solid var(--line); color:var(--paper);
+    font-size:0.98rem;
+  }
+  .contact-links a span.k{color:var(--paper-dim); font-family:var(--mono); font-size:0.82rem;}
+  .contact-links a:hover{color:var(--brass);}
+
+  footer{border-top:1px solid var(--line); padding:34px 0; text-align:center;}
+  footer p{color:var(--paper-dim); font-size:0.82rem; margin:4px 0;}
+
+  /* fill-in placeholders */
+  .fillin{color:var(--brass); border-bottom:1px dashed var(--brass-dim); cursor:help;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <a href="#home" class="brand"><span class="mark"></span>Tejas Kale</a>
+    <nav class="primary" id="primaryNav">
+      <a href="#journey">Journey</a>
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#skills">Skills</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">Menu</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>I build tools that help a medicine factory run safely, on time, and without guesswork.</h1>
+        <p class="role">Data Scientist · Biologics Manufacturing, GxP</p>
+        <p class="lede">Two years into building data tools inside an insulin and biologics factory — turning scanned paper records into searchable data, checking product quality from microscope photos, and building an AI helper that never sends data outside the building.</p>
+        <div class="cta-row">
+          <a href="#work" class="btn primary">See the work</a>
+          <a href="#contact" class="btn ghost">Get in touch</a>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 220 220" width="100%" style="max-width:220px;margin:0 auto 18px;display:block;" aria-hidden="true">
+          <circle cx="110" cy="110" r="96" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <circle cx="110" cy="110" r="96" fill="none" stroke="var(--brass)" stroke-width="3"
+                  stroke-dasharray="452" stroke-dashoffset="118" stroke-linecap="round" transform="rotate(-90 110 110)"/>
+          <circle cx="110" cy="110" r="74" fill="none" stroke="var(--line)" stroke-width="1"/>
+          <text x="110" y="102" text-anchor="middle" fill="var(--brass)" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="500">7</text>
+          <text x="110" y="126" text-anchor="middle" fill="var(--paper-dim)" font-family="Inter, sans-serif" font-size="11">systems shipped</text>
+          <g stroke="var(--line-strong)" stroke-width="1">
+            <line x1="110" y1="14" x2="110" y2="24"/>
+            <line x1="206" y1="110" x2="196" y2="110"/>
+            <line x1="110" y1="206" x2="110" y2="196"/>
+            <line x1="14" y1="110" x2="24" y2="110"/>
+          </g>
+        </svg>
+        <div class="record-card">
+          <div class="field"><span class="label">Peer-reviewed publication</span><span class="value">1</span></div>
+          <div class="field"><span class="label">M.Tech</span><span class="value">IIT Madras</span></div>
+          <div class="field"><span class="label">B.Tech</span><span class="value">IIT Jodhpur</span></div>
+          <div class="field"><span class="label">Regulatory context</span><span class="value">GxP</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section class="numbers">
+    <div class="numbers-grid">
+      <div class="num-cell">
+        <span class="n">1 hr → 3 min</span>
+        <div class="d">time to extract ~10 tables from scanned batch records</div>
+        <svg width="140" height="34" viewBox="0 0 140 34" aria-hidden="true">
+          <rect x="0" y="4" width="140" height="8" fill="var(--line)"/>
+          <rect x="0" y="4" width="7" height="8" fill="var(--brass)"/>
+          <rect x="0" y="20" width="140" height="8" fill="var(--line-strong)" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="num-cell">
+        <span class="n">70% → 30%</span>
+        <div class="d">batches with a late SAP yield entry, week over week</div>
+        <svg width="140" height="34" viewBox="0 0 140 34" aria-hidden="true">
+          <rect x="0" y="4" width="98" height="8" fill="var(--line-strong)"/>
+          <rect x="0" y="20" width="42" height="8" fill="var(--brass)"/>
+        </svg>
+      </div>
+      <div class="num-cell">
+        <span class="n">&gt;95%</span>
+        <div class="d">extraction accuracy on scanned tables, including handwriting</div>
+      </div>
+      <div class="num-cell">
+        <span class="n">₹25L</span>
+        <div class="d">licensed tool spend avoided by building in-house</div>
+      </div>
+      <div class="num-cell">
+        <span class="n">~200</span>
+        <div class="d">batches run through the inclusion-body vision pipeline, 9 images each</div>
+      </div>
+      <div class="num-cell">
+        <span class="n">0</span>
+        <div class="d">the root-cause AI helper runs fully offline — nothing sent outside</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey">
+    <div class="wrap">
+      <p class="eyebrow">The journey</p>
+      <h2 style="font-size:1.9rem; max-width:22ch; margin-bottom:44px;">From two engineering colleges to solving real problems on a factory floor.</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="when">2018 – 2022</div>
+          <h4>B.Tech</h4>
+          <div class="where">IIT Jodhpur</div>
+        </div>
+        <div class="tl-item">
+          <div class="when">2022 – 2024</div>
+          <h4>M.Tech</h4>
+          <div class="where">IIT Madras</div>
+        </div>
+        <div class="tl-item">
+          <div class="when">2024 · present</div>
+          <h4>Data Scientist</h4>
+          <div class="where">Wockhardt Ltd — biologics manufacturing, GxP-regulated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <p class="eyebrow">Selected work</p>
+      <h2 style="font-size:1.9rem; max-width:26ch;">Tools I built to fix real problems on the shop floor.</h2>
+      <p style="color:var(--paper-dim); max-width:60ch; margin-top:14px;">I've changed product names and exact figures to protect company data. The problems, and how I solved them, are real.</p>
+
+      <!-- CASE 1: WockBMR.AI -->
+      <div class="case">
+        <div class="case-head">
+          <div>
+            <p class="case-tag">Reading paperwork automatically</p>
+            <h3>Turning scanned factory paperwork into searchable data</h3>
+          </div>
+          <span class="status live">Live in production</span>
+        </div>
+        <div class="case-body">
+          <div>
+            <h5>The problem</h5>
+            <p>Batch manufacturing records are filled in by hand on the floor, scanned, and archived as images. Finding a specific process value later meant a person opening PDFs and reading them — including tables with handwritten entries. There was no way to search or aggregate any of it.</p>
+            <h5>What I built</h5>
+            <p>A Streamlit application on top of Azure Document Intelligence that reads scanned batch records, including handwritten table entries, and extracts them straight into structured Excel output. It's used two ways day to day: pulling specific process values out of archived records for retrospective analysis, and bulk table extraction for the QA team, who previously hunted for a separate tool to do that job.</p>
+            <h5>Where it stands</h5>
+            <p>Deployed on Streamlit Community Cloud with credential handling for internal use; an Azure-internal deployment behind the company VPN is planned next, wired into the same GitHub deployment flow the rest of the team already uses.</p>
+          </div>
+          <div class="case-stats">
+            <div class="stat-chip"><span class="n">1hr → 3min</span><span class="d">per ~10-table extraction job</span></div>
+            <div class="stat-chip"><span class="n">&gt;95%</span><span class="d">extraction accuracy, incl. handwriting</span></div>
+            <div class="stat-chip"><span class="n">₹25L</span><span class="d">tool purchase avoided by building it in-house</span></div>
+          </div>
+        </div>
+        <div class="tools-line"><span>Azure Document Intelligence</span><span>PyPDF2</span><span>Streamlit</span><span>Python</span></div>
+      </div>
+
+      <!-- CASE 2: IB image analysis + MLOps refactor -->
+      <div class="case">
+        <div class="case-head">
+          <div>
+            <p class="case-tag">Checking quality from a photo</p>
+            <h3>Turning a microscope photo into data anyone can search</h3>
+          </div>
+          <span class="status live">Live in production</span>
+        </div>
+        <div class="case-body">
+          <div>
+            <h5>The problem</h5>
+            <p>An operator looks down a microscope, and what they see — cell count, and how many of those cells are carrying inclusion bodies — is a real signal for how a batch is performing. That signal was going unrecorded, or recorded without any link back to the process parameters that might explain it.</p>
+            <h5>What I built</h5>
+            <p>A tool that takes an operator-captured microscope image, counts cells and inclusion-body-positive cells, and joins that result back to the process parameters for that batch — turning a visual check into a queryable dataset the process team can look at alongside everything else they track.</p>
+            <h5>Rebuilding it properly</h5>
+            <p>I later rebuilt this project as a personal learning exercise, following good software practices: moved every setting into one config file, split one long script into clear parts (reading images, extracting data, applying rules, writing reports), and wrote 28 automated tests. The factory computer has no internet access, so those tests use Python's built-in testing tool rather than one that needs downloading. Every accept/reject decision is now saved in a clear log instead of just printed and lost.</p>
+          </div>
+          <div class="case-stats">
+            <div class="stat-chip"><span class="n">~200</span><span class="d">batches analysed, 9 images each</span></div>
+            <div class="stat-chip"><span class="n">28</span><span class="d">unit tests, no PyPI access required</span></div>
+            <div class="stat-chip"><span class="n">1 file</span><span class="d">config.yaml replacing hard-coded values</span></div>
+          </div>
+        </div>
+        <div class="tools-line"><span>OpenCV</span><span>Python</span><span>unittest</span><span>YAML config</span><span>JSON-lines logging</span></div>
+      </div>
+
+      <!-- CASE 3: RCA assistant -->
+      <div class="case">
+        <div class="case-head">
+          <div>
+            <p class="case-tag">An AI helper that stays on-site</p>
+            <h3>An AI assistant for finding root causes — that never leaves the building</h3>
+          </div>
+          <span class="status progress">In progress</span>
+        </div>
+        <div class="case-body">
+          <div>
+            <h5>The problem</h5>
+            <p>When something goes wrong on the floor, figuring out why often means remembering how a similar problem was solved months or years ago — and that memory lives in a few people's heads, not anywhere searchable. Any tool built to help has one hard rule from the start: this data cannot leave the building, which rules out every cloud-based AI service.</p>
+            <h5>What I'm building</h5>
+            <p>An AI assistant that reads through past investigation records and suggests likely causes for a new problem — built to run entirely on a local computer, using a free open-source language model. Nothing about the investigation ever gets sent over the internet.</p>
+            <h5>Where it stands</h5>
+            <p>In progress: it can already search past records and suggest causes. Next, I'm checking how good those suggestions are against cases where the real cause is already known.</p>
+          </div>
+          <div class="case-stats">
+            <div class="stat-chip"><span class="n">0</span><span class="d">data sent outside the building — fully offline</span></div>
+            <div class="stat-chip"><span class="n">Search + AI</span><span class="d">reads past records to suggest likely causes</span></div>
+          </div>
+        </div>
+        <div class="tools-line"><span>FAISS</span><span>Ollama</span><span>llama3.1:8b</span><span>nomic-embed-text</span></div>
+      </div>
+
+      <!-- CASE 4: Yield improvement ML -->
+      <div class="case">
+        <div class="case-head">
+          <div>
+            <p class="case-tag">Machine learning · Process yield</p>
+            <h3>Using machine learning to close the gap between average and best-case yield</h3>
+          </div>
+          <span class="status progress">In progress</span>
+        </div>
+        <div class="case-body">
+          <div>
+            <h5>The problem</h5>
+            <p>For a small-molecule API, the best possible yield the chemistry allows is 56%. Real batches were averaging 51% — a real, persistent gap, with no clear answer for which of the hundreds of process steps and settings were actually responsible.</p>
+            <h5>What I built</h5>
+            <p>Working with process experts, I started from 313 possible features across every stage of the process — timings, temperatures, pH, quality-check results — and narrowed that down to 217 that actually mattered. I used correlation analysis built to catch non-linear relationships (a chemical process rarely responds in a straight line) to find which steps were quietly dragging yield down, including one heating step and one temperature limit that both needed tightening. I then tried a wide range of models to find the best fit, and used an optimization algorithm to solve for the exact settings that would push yield higher.</p>
+            <h5>Judgement calls worth naming</h5>
+            <p>Some settings looked statistically important but weren't things anyone could actually act on — known only after a test result came back, or already fixed earlier in the process — so I left them out of the recommendations, even though including them would have made the model look better on paper. One recommended amount also got rounded to match the real pack size the raw material is delivered in, since the mathematically "perfect" number wasn't something the floor could actually measure out.</p>
+            <h5>Where it stands</h5>
+            <p>Recommendations are with the process team; some of the biggest remaining drivers (heating and cooling times) turn out to depend on the weather outside, which nobody can control — so the honest ceiling on this project is lower than the model alone would suggest.</p>
+          </div>
+          <div class="case-stats">
+            <div class="stat-chip"><span class="n">51% → 54%</span><span class="d">average yield vs. new target (56% is the ceiling)</span></div>
+            <div class="stat-chip"><span class="n">313 → 217</span><span class="d">candidate features narrowed down</span></div>
+            <div class="stat-chip"><span class="n">53%</span><span class="d">best single batch achieved so far</span></div>
+          </div>
+        </div>
+        <div class="tools-line"><span>Python</span><span>PyCaret</span><span>Differential evolution</span><span>Correlation &amp; mutual information</span></div>
+      </div>
+
+      <!-- CASE 5: QA data chatbot -->
+      <div class="case">
+        <div class="case-head">
+          <div>
+            <p class="case-tag">Applied LLMs · Quality &amp; operations</p>
+            <h3>A chatbot that answers questions across quality, engineering and process data</h3>
+          </div>
+          <span class="status live">Live in production</span>
+        </div>
+        <div class="case-body">
+          <div>
+            <h5>The problem</h5>
+            <p>Answering one question — about a deviation, an engineering issue, or a process trend — usually meant checking SAP, an Excel tracker, and an Azure system separately, then piecing the answer together by hand.</p>
+            <h5>What I built</h5>
+            <p>Two connected pieces. First, a custom chatbot, built with ChatGPT's custom chatbot feature, fed with quality, deviation, engineering and process data pulled from SAP, Excel and Azure, so people can ask a plain-language question and get an answer without opening any of the source systems. Second, a LangChain-based tool that connects straight to the same data in Azure Data Lake using SQL underneath, so questions can be answered against live data instead of a periodically refreshed copy.</p>
+            <h5>Where it stands</h5>
+            <p>In use for day-to-day questions across quality and engineering, with the direct data-lake connection covering the cases where the answer needs to reflect what's true right now.</p>
+          </div>
+          <div class="case-stats">
+            <div class="stat-chip"><span class="n">3 sources</span><span class="d">SAP, Excel and Azure, in one place to ask questions</span></div>
+            <div class="stat-chip"><span class="n">2 parts</span><span class="d">a chat interface, and a direct live-data query tool</span></div>
+          </div>
+        </div>
+        <div class="tools-line"><span>ChatGPT custom chatbot</span><span>LangChain</span><span>SQL</span><span>Azure Data Lake</span></div>
+      </div>
+
+      <div class="also-built">
+        <h4>Also built and running</h4>
+        <ul class="also-list">
+          <li><b>Yield deviation dashboards</b> — flag batches and stage yields that drift outside their normal trend, for two insulin product lines, escalating automatically to department and plant heads.</li>
+          <li><b>SAP data-entry alerting</b> — cut late yield entries from 70% to 30% of batches week over week, catching gaps within 3 days instead of up to a month.</li>
+          <li><b>APQR automation</b> — a shared Excel/VBA + Python pipeline computing Cp, Cpk, sigma level and OOS alerts for Annual Product Quality Review, replacing per-product manual analysis.</li>
+          <li><b>RFID-based leak detection</b> — a scanning workflow for engineering rounds, built and validated with an equipment vendor.</li>
+          <li><b>QMS data extraction</b> — pulls CAPA, deviation and change-control records out of Azure Synapse for quality reporting.</li>
+          <li><b>Batch yield MCP server</b> — exposes 8 tools over MCP for batch yield data, with a companion Streamlit app for the wider team.</li>
+          <li><b>Digital raw-material charging</b> — barcode-verified material charging on handheld scanners; three vendors evaluated on a weighted scorecard so far.</li>
+          <li><b>Internal report hosting</b> — a small Flask server with per-user access, for sharing self-contained HTML analysis reports over the plant LAN.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="wrap">
+      <p class="eyebrow">How I work</p>
+      <h2 style="font-size:1.9rem; max-width:24ch; margin-bottom:40px;">Four habits I've learned from working in a regulated factory.</h2>
+    </div>
+    <div class="wrap">
+      <div class="principles">
+        <div class="principle">
+          <span class="tag">Work with what's there</span>
+          <h4>Build for the computer you actually have, not the one you wish you had</h4>
+          <p>The factory computer has no internet access, so tests run on Python's built-in <code>unittest</code> tool instead of one that needs downloading. Quality data can't leave the building, so the AI helper runs entirely offline on a local model. What's actually available decides how something gets built.</p>
+        </div>
+        <div class="principle">
+          <span class="tag">Catch it early</span>
+          <h4>Catching a mistake early is cheap. Finding it later is expensive</h4>
+          <p>Missing data entries used to surface a month later, if at all, and quietly threw off every average calculated from them. Flagging the gap within days, right at the source, mattered more than anything clever done with the numbers afterward.</p>
+        </div>
+        <div class="principle">
+          <span class="tag">Build vs. buy</span>
+          <h4>Building it ourselves was cheaper than buying it</h4>
+          <p>There was a paid tool that could read scanned records. Building the same thing in-house cost less, and it meant we owned the tool for whatever came next.</p>
+        </div>
+        <div class="principle">
+          <span class="tag">Do it properly</span>
+          <h4>A script that works once isn't the same as one that lasts</h4>
+          <p>The microscope-photo tool worked fine before it had settings, tests, or clear sections. I gave it all three anyway — because a tool only one person can safely change becomes a problem the moment that person is unavailable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <p class="eyebrow">Capabilities</p>
+      <h2 style="font-size:1.9rem; margin-bottom:40px;">What I actually reach for</h2>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h4>Document &amp; image intelligence</h4>
+          <div class="chips">
+            <span class="chip">Azure Document Intelligence</span>
+            <span class="chip">PyPDF2</span>
+            <span class="chip">OpenCV</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Applied LLMs</h4>
+          <div class="chips">
+            <span class="chip">LangChain</span>
+            <span class="chip">GPT-4o / Custom GPTs</span>
+            <span class="chip">FAISS</span>
+            <span class="chip">Ollama / llama3.1</span>
+            <span class="chip">MCP servers</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Machine learning</h4>
+          <div class="chips">
+            <span class="chip">PyCaret</span>
+            <span class="chip">Feature engineering</span>
+            <span class="chip">Correlation &amp; mutual information</span>
+            <span class="chip">Differential evolution</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Automation &amp; pipelines</h4>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">SAP GUI scripting (VBScript)</span>
+            <span class="chip">Excel / VBA</span>
+            <span class="chip">YAML-driven config</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Dashboards &amp; data platforms</h4>
+          <div class="chips">
+            <span class="chip">Streamlit</span>
+            <span class="chip">Plotly Dash</span>
+            <span class="chip">Azure Synapse</span>
+            <span class="chip">SQL</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Engineering practice</h4>
+          <div class="chips">
+            <span class="chip">unittest</span>
+            <span class="chip">Modular pipeline design</span>
+            <span class="chip">Structured logging</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Domain</h4>
+          <div class="chips">
+            <span class="chip">GxP &amp; data integrity</span>
+            <span class="chip">Biologics manufacturing</span>
+            <span class="chip">APQR &amp; regulatory reporting</span>
+            <span class="chip">Deviation &amp; CAPA analytics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="wrap">
+      <p class="eyebrow">Research</p>
+      <h2 style="font-size:1.9rem; margin-bottom:32px;">Before manufacturing: genomics</h2>
+      <div class="paper-card">
+        <div class="yr">2026</div>
+        <div>
+          <h4>Genomic diversity of <em>Klebsiella pneumoniae</em></h4>
+          <div class="venue">BMC Microbiology · Third author</div>
+          <p class="note">Contributed as third author to a genomic-diversity study of <em>Klebsiella pneumoniae</em> — the last piece of work before moving fully into manufacturing data systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <p class="eyebrow">Get in touch</p>
+      <div class="contact-grid">
+        <div>
+          <h2 style="font-size:1.9rem; max-width:20ch;">Happy to talk shop.</h2>
+          <p style="color:var(--paper-dim); max-width:52ch; margin-top:14px;">If you're working on manufacturing intelligence, document or image-based quality tooling, or offline LLM tooling for a regulated environment, I'd like to hear about it.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:iamtejaskale@gmail.com"><span>Email</span><span class="k">iamtejaskale@gmail.com</span></a>
+          <a href="https://www.linkedin.com/in/tejas-kale-iitm/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="k">linkedin.com/in/tejas-kale-iitm</span></a>
+          <a href="https://github.com/Tejas552" target="_blank" rel="noopener"><span>GitHub</span><span class="k">github.com/Tejas552</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Tejas Kale · Mumbai, India</p>
+    <p>No confidential, product-identifying or commercially sensitive information is published here.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  var menuBtn = document.getElementById('menuBtn');
+  var nav = document.getElementById('primaryNav');
+  menuBtn.addEventListener('click', function(){
+    nav.classList.toggle('open');
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ nav.classList.remove('open'); });
+  });
+</script>
+
+</body>
+</html>
